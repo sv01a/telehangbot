@@ -12,7 +12,7 @@ email = os.getenv('TELEHANGBOT_GOOGLE_EMAIL')
 password = os.getenv('TELEHANGBOT_GOOGLE_PASSWD')
 
 timeout = 5
-selenium_server_address = 'http://localhost:9515'#/wd/hub'
+selenium_server_address = 'http://localhost:4444/wd/hub'
 commands = [u'/потрындеть',u'/перетереть',u'/takeacall',u'/tac',u'/попиздеть']
 
 
