@@ -10,21 +10,26 @@
     src: envfile
     dest: "{{ install_dir }}/envfile"
 
-- name: Checkout sourcecode 
-  git: 
-    repo: https://github.com/sv01a/telehangbot.git
-    dest: "{{ install_dir }}/telehangbot_src"
+# - name: Checkout sourcecode 
+#   git: 
+#     repo: https://github.com/sv01a/telehangbot.git
+#     dest: "{{ install_dir }}/telehangbot_src"
 
-- name: Build an image
+# - name: Build an image
+#   docker_image:
+#     path: "{{ install_dir }}/telehangbot_src"
+#     name: telehangbot
+#     force: true
+
+- name: Pull fresh docker image
   docker_image:
-    path: "{{ install_dir }}/telehangbot_src"
-    name: telehangbot
-    force: true
+    name: sv01a/telehangbot   
+    force: yes # force update image each time 
   
 - name: Run Telehangbot container
-  docker_container:
+  docker_container:    
     name: telehangbot
-    image: telehangbot
+    image: sv01a/telehangbot
     state: started
     restart: yes
     recreate: yes
