@@ -19,11 +19,13 @@
   docker_image:
     path: "{{ install_dir }}/telehangbot_src"
     name: telehangbot
-
+    force: true
+  
 - name: Run Telehangbot container
   docker_container:
     name: telehangbot
     image: telehangbot
     state: started
     restart: yes
+    recreate: yes
     env_file: "{{ install_dir }}/envfile"
