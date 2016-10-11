@@ -1,0 +1,11 @@
+--
+
+- hosts: destination
+  become: yes
+  vars:
+    - telegram_bot_token: "<token-goes-here>"
+    - bot_email: "<email>"
+    - bot_password: "<password>"
+    #- install_dir: "you can customize install dir too"
+  roles:
+    - telehangbot

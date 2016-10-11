@@ -1,0 +1,29 @@
+---
+
+- name: Create app directory
+  file: 
+    dest: "{{ install_dir }}"
+    state: directory
+
+- name: Deploy envfile
+  template:
+    src: envfile
+    dest: "{{ install_dir }}/envfile"
+
+- name: Checkout sourcecode 
+  git: 
+    repo: https://github.com/sv01a/telehangbot.git
+    dest: "{{ install_dir }}/telehangbot_src"
+
+- name: Build an image
+  docker_image:
+    path: "{{ install_dir }}/telehangbot_src"
+    name: telehangbot
+
+- name: Run Telehangbot container
+  docker_container:
+    name: telehangbot
+    image: telehangbot
+    state: started
+    restart: yes
+    env_file: "{{ install_dir }}/envfile"

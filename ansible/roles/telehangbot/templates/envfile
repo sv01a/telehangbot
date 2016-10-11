@@ -1,0 +1,3 @@
+TELEHANGBOT_TELEGRAM_TOKEN={{ telegram_bot_token }}
+TELEHANGBOT_GOOGLE_EMAIL={{ bot_email }}
+TELEHANGBOT_GOOGLE_PASSWD={{ bot_password }} 
