@@ -67,7 +67,7 @@ def getlink():
     elem = driver.get('https://hangouts.google.com/start')
 
     #wait until redirect and take a url
-    time.sleep(3)
+    time.sleep(6)
     link = driver.current_url
 
     print('Got a link: %s' % link)
