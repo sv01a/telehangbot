@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+import re
 import os
 import time
 import telepot
@@ -41,6 +42,17 @@ def setValueAndGo(driver, id, value):
     elem.send_keys(value)
     elem.send_keys(Keys.RETURN)
 
+def waitForUrl(driver, url):
+    """
+    wait while url loaded
+    """
+    regex = re.compile(url)
+    for _ in range(20):
+        if regex.match(driver.current_url):
+            break
+        time.sleep(1)
+
+
 def getlink():
     """
     get hangout link by selenium
@@ -66,13 +78,13 @@ def getlink():
 
     link = ''
 
-    time.sleep(2)
+    waitForUrl(driver, 'https://myaccount.google.com(.+)')
     if 'myaccount.google.com' in driver.current_url:  
         #start hangout
         elem = driver.get('https://hangouts.google.com/start')
 
         #wait until redirect and take a url
-        time.sleep(timeout)
+        waitForUrl(driver, 'https://hangouts.google.com/hangouts/_/(.+)')
         link = driver.current_url
 
         print('Got a link: %s' % link)
