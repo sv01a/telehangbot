@@ -12,7 +12,7 @@ email = os.getenv('TELEHANGBOT_GOOGLE_EMAIL')
 password = os.getenv('TELEHANGBOT_GOOGLE_PASSWD')
 
 timeout = 5
-selenium_server_address = 'http://localhost:4444/wd/hub'
+selenium_server_address = 'http://localhost:9515'#/wd/hub'
 commands = [u'/потрындеть',u'/перетереть',u'/takeacall',u'/tac',u'/попиздеть']
 
 
@@ -61,16 +61,21 @@ def getlink():
     
     #enter password
     setValueAndGo(driver, "Passwd", password)
-    
-    #start hangout
-    time.sleep(timeout)
-    elem = driver.get('https://hangouts.google.com/start')
 
-    #wait until redirect and take a url
-    time.sleep(timeout)
-    link = driver.current_url
+    link = ''
 
-    print('Got a link: %s' % link)
+    time.sleep(2)
+    if 'myaccount.google.com' in driver.current_url:  
+        #start hangout
+        elem = driver.get('https://hangouts.google.com/start')
+
+        #wait until redirect and take a url
+        time.sleep(timeout)
+        link = driver.current_url
+
+        print('Got a link: %s' % link)
+    else:
+        link = 'Login: something went wrong'
 
     driver.close()
     return link
