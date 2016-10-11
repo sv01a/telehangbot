@@ -1,0 +1,2 @@
+[hosts]
+destination ansible_host=<host-goes-here>

@@ -1,2 +1,4 @@
 Dockerfile
 readme.md
+inventory
+deploy.yml
