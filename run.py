@@ -63,11 +63,11 @@ def getlink():
     setValueAndGo(driver, "Passwd", password)
     
     #start hangout
-    time.sleep(2)
+    time.sleep(timeout)
     elem = driver.get('https://hangouts.google.com/start')
 
     #wait until redirect and take a url
-    time.sleep(3)
+    time.sleep(timeout)
     link = driver.current_url
 
     print('Got a link: %s' % link)
