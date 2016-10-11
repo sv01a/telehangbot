@@ -11,7 +11,7 @@ token = os.getenv('TELEHANGBOT_TELEGRAM_TOKEN')
 email = os.getenv('TELEHANGBOT_GOOGLE_EMAIL')
 password = os.getenv('TELEHANGBOT_GOOGLE_PASSWD')
 
-timeout_str = int(os.getenv('TELEHANGBOT_TIMEOUT')) or "5"
+timeout_str = os.getenv('TELEHANGBOT_TIMEOUT') or "5"
 timeout = int(timeout_str)
 
 selenium_server_address = 'http://localhost:4444/wd/hub'
