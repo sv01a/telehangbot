@@ -34,3 +34,5 @@
     restart: yes
     recreate: yes
     env_file: "{{ install_dir }}/envfile"
+    ports:      
+      - 5900:5900
