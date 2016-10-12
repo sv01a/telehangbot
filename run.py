@@ -16,7 +16,7 @@ timeout_str = os.getenv('TELEHANGBOT_TIMEOUT') or "5"
 timeout = int(timeout_str)
 
 selenium_server_address = 'http://localhost:4444/wd/hub'
-commands = [u'/потрындеть',u'/перетереть',u'/takeacall',u'/tac',u'/попиздеть']
+commands = [u'/потрындеть',u'/перетереть',u'/takeacall',u'/tac',u'/попиздеть',u'/поговорить']
 
 
 def handle(msg):
@@ -52,11 +52,25 @@ def waitForUrl(driver, url):
             break
         time.sleep(1)
 
+def tryGetLink(driver):
+    """
+    try to get hangouts link
+    """
+    if 'myaccount.google.com' in driver.current_url: 
+        #start hangout
+        elem = driver.get('https://hangouts.google.com/start')
+
+        #wait until redirect and take a url
+        waitForUrl(driver, 'https://hangouts.google.com/hangouts/_/(.+)')
+        return driver.current_url
+    else:
+        return "error"
 
 def getlink():
     """
-    get hangout link by selenium
+    authorize and get link
     """
+    link = ''
 
     #disable mic access request
     options = webdriver.ChromeOptions()
@@ -76,20 +90,14 @@ def getlink():
     #enter password
     setValueAndGo(driver, "Passwd", password)
 
-    link = ''
-
     waitForUrl(driver, 'https://myaccount.google.com(.+)')
-    if 'myaccount.google.com' in driver.current_url:  
-        #start hangout
-        elem = driver.get('https://hangouts.google.com/start')
 
-        #wait until redirect and take a url
-        waitForUrl(driver, 'https://hangouts.google.com/hangouts/_/(.+)')
-        link = driver.current_url
+    link = tryGetLink(driver)
 
-        print('Got a link: %s' % link)
-    else:
-        link = 'Login: something went wrong'
+    if link == "error":
+        #enter city
+        setValueAndGo(driver, "answer", "Perm")
+        link = tryGetLink(driver)
 
     driver.close()
     return link
