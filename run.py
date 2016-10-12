@@ -16,7 +16,7 @@ timeout_str = os.getenv('TELEHANGBOT_TIMEOUT') or "5"
 timeout = int(timeout_str)
 
 selenium_server_address = 'http://localhost:4444/wd/hub'
-commands = [u'/потрындеть',u'/перетереть',u'/takeacall',u'/tac',u'/попиздеть',u'/поговорить']
+commands = [u'/потрындеть',u'/перетереть',u'/takeacall',u'/tac',u'/попиздеть',u'/поговорить',u'/беседа']
 
 
 def handle(msg):
