@@ -4,5 +4,4 @@ run:
 
 TODO:
 
-- hangout's link buffer
-- async link request 
+- save\load cookies

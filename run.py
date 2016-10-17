@@ -56,7 +56,6 @@ def checkLoggedIn():
             loggedIn = False
         else: 
             loggedIn = True
-            loginTries = 0
     except:
         pass
 
@@ -110,14 +109,20 @@ def tryGetLink():
     try to get hangouts link
     """
     global driver
-    driver.get('https://hangouts.google.com/start')
-    if waitForUrl('https://hangouts.google.com/hangouts/_/(.+)'):
-        link = driver.current_url
-        #leave hangout's page
-        driver.get('https://google.com')
-        return link
-    else:
-        return "error"
+    link = "error"
+    try:
+        if loggedIn == True:
+            driver.get('https://hangouts.google.com/start')
+            if waitForUrl('https://hangouts.google.com/hangouts/_/(.+)'):
+                link = driver.current_url
+                #leave hangout's page
+                driver.get('https://google.com')
+    except Exception as e:
+        if debug:
+            link = link + ': ' + str(e)
+        pass
+
+    return link
 
 def getlink():
     """
@@ -125,23 +130,16 @@ def getlink():
     """
     global links
     global loggedIn
+    global driver
 
     links = links + 1
-    link = 'error'
+    link = tryGetLink()
 
-    try:
-        checkLoggedIn()
-
-        if loggedIn == True:
-            link = tryGetLink()
-
-    except Exception as e:
-        if debug == True:
-            link = str(e)
-        pass
-    
+    if 'error' in link:
+        sepUpAndLogin()
+        link = getlink()    
     #restart chrome
-    if links > 100 or loggedIn == False:
+    elif links > 100 or loggedIn == False:
         links = 0
         sepUpAndLogin()
 
