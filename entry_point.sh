@@ -1,3 +1,3 @@
 #!/bin/bash
 sh -c /opt/bin/entry_point.sh &
-python /telehangbot/run.py
+python3 /telehangbot/inline.py

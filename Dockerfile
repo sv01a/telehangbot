@@ -3,13 +3,11 @@ FROM selenium/standalone-chrome-debug:2.53.1-americium
 
 USER root
 
-RUN apt-get update && apt-get install -y python python-pip 
-RUN pip install telepot
-RUN pip install selenium
+RUN apt-get update && apt-get install -y python3 python3-pip 
+RUN pip3 install telepot
+RUN pip3 install selenium
 
 COPY . /telehangbot
 RUN chmod +x /telehangbot/entry_point.sh
 
 CMD bash /telehangbot/entry_point.sh
-
-#ENTRYPOINT python /telehangbot/run.py
