@@ -110,6 +110,9 @@ def setValueAndGo(id, value):
     elem.send_keys(value)
     elem.send_keys(Keys.RETURN)
 
+    # if debug:
+    #     driver.save_screenshot('/shared/screen.png')
+
 def waitForUrl(url):
     """
     wait while url loaded

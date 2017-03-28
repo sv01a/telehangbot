@@ -5,8 +5,14 @@ import time
 import uuid
 import asyncio
 import telepot
+import urllib3
+import telepot.api
 import telepot.aio
 import hangoutLinker
+
+telepot.api._pools={
+    'default': urllib3.PoolManager(num_pools=3, maxsize=10, retries=3, timeout=30)
+}
 
 token = os.getenv('TELEHANGBOT_TELEGRAM_TOKEN')
 commands = [u'/потрындеть',u'/перетереть',u'/takeacall',u'/tac',u'/попиздеть',u'/поговорить',u'/беседа',u'/переговоры']
