@@ -27,10 +27,13 @@ def saveCookies():
     pickle.dump(driver.get_cookies(), open(cookies_file,"wb"))
 
 def loadCookies():
-    if os.path.isfile(cookies_file):
-        cookies = pickle.load(open(cookies_file, "rb"))
-        for cookie in cookies:
-            driver.add_cookie(cookie)
+    try:
+        if os.path.isfile(cookies_file):
+            cookies = pickle.load(open(cookies_file, "rb"))
+            for cookie in cookies:
+                driver.add_cookie(cookie)
+    except:
+        pass
 
 def setUpDriver():
     """
@@ -76,8 +79,8 @@ def login():
 
     driver.get("https://myaccount.google.com")
 
-    if loadCookies():
-        checkLoggedIn()
+    loadCookies()
+    checkLoggedIn()
 
     if loggedIn:
         return
