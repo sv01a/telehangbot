@@ -33,7 +33,8 @@ async def on_chat_message(msg):
 async def on_inline_query(msg):
     async def compute_answer():
             query_id, from_id, query_string = telepot.glance(msg, flavor='inline_query')
-            print('Inline Query:', query_id, from_id, query_string)
+            query_string = query_string.encode('utf-8').decode()
+            # print('Inline Query:', query_id, from_id, query_string)
 
             uri = link_by_user.get(from_id)
 
@@ -46,7 +47,7 @@ async def on_inline_query(msg):
                     'type': 'article',
                     'id': str(uuid.uuid4()), 
                     'thumb_url': 'http://zags.interfacetesting.ru/lavrov.jpg',
-                    'title': 'Начать сложные переговоры с шутки: ' + query_string, 
+                    'title': u'Начать сложные переговоры с шутки: ' + query_string, 
                     'message_text': query_string + '\r\n' + uri
                 }]
 
@@ -58,7 +59,8 @@ async def on_inline_query(msg):
 
 def on_chosen_inline_result(msg):
     result_id, from_id, query_string = telepot.glance(msg, flavor='chosen_inline_result')
-    print('Chosen Inline Result:', result_id, from_id, query_string)
+    query_string = query_string.encode('utf-8').decode()
+    # print('Chosen Inline Result:', result_id, from_id, query_string)
     #remove link from cache
     if link_by_user.get(from_id) is not None:
         link_by_user.pop(from_id)   

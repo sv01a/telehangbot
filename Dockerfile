@@ -1,5 +1,5 @@
-#FROM selenium/standalone-chrome:2.53.1-americium
-FROM selenium/standalone-chrome-debug:2.53.1-americium
+FROM selenium/standalone-chrome:3.3.0-americium
+# FROM selenium/standalone-chrome-debug:2.53.1-americium
 
 USER root
 
