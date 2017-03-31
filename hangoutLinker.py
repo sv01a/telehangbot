@@ -24,22 +24,28 @@ loggedIn = False
 links = 0
 
 def saveCookies():
-    pickle.dump(driver.get_cookies(), open(cookies_file,"wb"))
+    print("saveCookies")
+    # driver.get("https://google.com")
+    # waitForUrl('https://www.google(.+)')
+    # pickle.dump(driver.get_cookies(), open(cookies_file,"wb"))
 
 def loadCookies():
-    try:
-        driver.get("https://accounts.google.com")
-        if os.path.isfile(cookies_file):
-            cookies = pickle.load(open(cookies_file, "rb"))
-            for cookie in cookies:
-                driver.add_cookie(cookie)
-    except:
-        pass
+    print("loadCookies")
+    # try:
+    #     driver.get("https://google.com")
+    #     waitForUrl('https://www.google(.+)')
+    #     if os.path.isfile(cookies_file):
+    #         cookies = pickle.load(open(cookies_file, "rb"))
+    #         for cookie in cookies:
+    #             driver.add_cookie(cookie)
+    # except:
+    #     pass
 
 def setUpDriver():
     """
     init driver and set chrome options
     """
+    print("setUpDriver")
     global driver
     try:
         driver.close()
@@ -59,22 +65,26 @@ def checkLoggedIn():
     """
     check on logged in 
     """
+    print("checkLoggedIn")
     global driver
     try:
-        driver.get("https://myaccount.google.com")
-        waitForUrl('https://myaccount.google.com(.+)')
+        driver.get("https://accounts.google.com")
+        waitForUrl('https://accounts.google.com(.+)')
 
-        if 'https://myaccount.google.com/intro' == driver.current_url:
-            loggedIn = False
-        else: 
-            loggedIn = True
+        elem = driver.find_element_by_id("Email")
+        loggedIn = False
     except:
+        loggedIn = True
         pass
 
 def login():
     """
     login into google account
     """
+    print("login")
+    
+    loggedIn = False
+    
     global driver
     global loggedIn
 
@@ -107,6 +117,7 @@ def setValueAndGo(id, value):
     """
     set input value by id and press enter
     """
+    print("setValueAndGo")
     global driver
     elem = driver.find_element_by_id(id)
     elem.send_keys(value)
@@ -119,9 +130,10 @@ def waitForUrl(url):
     """
     wait while url loaded
     """
+    print("waitForUrl")
     global driver
     regex = re.compile(url)
-    for _ in range(20):
+    for _ in range(10):
         if regex.match(driver.current_url):
             return True
         time.sleep(0.5)
@@ -132,10 +144,11 @@ def tryGetLink():
     """
     try to get hangouts link
     """
+    print("tryGetLink")
     global driver
     link = "error"
     try:
-        if loggedIn == True:
+        if loggedIn:
             driver.get('https://hangouts.google.com/start')
             if waitForUrl('https://hangouts.google.com/hangouts/_/(.+)'):
                 link = driver.current_url
@@ -152,6 +165,7 @@ def getlink():
     """
     authorize and get link
     """
+    print("getlink")
     global links
     global loggedIn
     global driver
@@ -161,7 +175,7 @@ def getlink():
 
     if 'error' in link:
         sepUpAndLogin()
-        link = getlink()    
+        link = getlink()
     #restart chrome
     elif links > 100 or loggedIn == False:
         links = 0
