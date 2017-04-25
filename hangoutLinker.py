@@ -134,6 +134,7 @@ def waitForUrl(url):
     global driver
     regex = re.compile(url)
     for _ in range(10):
+        print(driver.current_url)
         if regex.match(driver.current_url):
             return True
         time.sleep(0.5)
@@ -150,7 +151,7 @@ def tryGetLink():
     try:
         if loggedIn:
             driver.get('https://hangouts.google.com/start')
-            if waitForUrl('https://hangouts.google.com/hangouts/_/(.+)'):
+            if waitForUrl('https://hangouts.google.com/call/(.+)'):
                 link = driver.current_url
                 #leave hangout's page
                 driver.get('https://google.com')
