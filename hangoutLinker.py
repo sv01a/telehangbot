@@ -151,7 +151,7 @@ def tryGetLink():
     try:
         if loggedIn:
             driver.get('https://hangouts.google.com/start')
-            if waitForUrl('https://hangouts.google.com/call/(.+)'):
+            if waitForUrl('https://hangouts.google.com/hangouts/_/(.+)'):
                 link = driver.current_url
                 #leave hangout's page
                 driver.get('https://google.com')
