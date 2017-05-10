@@ -67,11 +67,12 @@ def checkLoggedIn():
     """
     print("checkLoggedIn")
     global driver
+    global loggedIn
     try:
         driver.get("https://accounts.google.com")
         waitForUrl('https://accounts.google.com(.+)')
 
-        elem = driver.find_element_by_id("Email")
+        elem = driver.find_element_by_name("identifier")
         loggedIn = False
     except:
         loggedIn = True
@@ -82,6 +83,7 @@ def login():
     login into google account
     """
     print("login")
+    global loggedIn
     
     loggedIn = False
     
@@ -98,10 +100,10 @@ def login():
     driver.get("https://accounts.google.com")
     
     #enter email
-    setValueAndGo("Email", email)
+    setValueAndGo("identifier", email)
     
     #enter password
-    setValueAndGo("Passwd", password)
+    setValueAndGo("password", password)
     # if all is ok should be redirect to myaccount
     waitForUrl('https://myaccount.google.com(.+)')
     if 'myaccount.google.com' in driver.current_url: 
@@ -113,13 +115,13 @@ def login():
 
     saveCookies()
 
-def setValueAndGo(id, value):
+def setValueAndGo(name, value):
     """
-    set input value by id and press enter
+    set input value by name and press enter
     """
     print("setValueAndGo")
     global driver
-    elem = driver.find_element_by_id(id)
+    elem = driver.find_element_by_name(name)
     elem.send_keys(value)
     elem.send_keys(Keys.RETURN)
 
@@ -147,6 +149,8 @@ def tryGetLink():
     """
     print("tryGetLink")
     global driver
+    global loggedIn
+
     link = "error"
     try:
         if loggedIn:
