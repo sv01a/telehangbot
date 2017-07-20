@@ -13,6 +13,7 @@ or
   - replace `<password>` to google account password
 - edit inventtory file:
   - replace <host-goes-here> to host ip. On the host should be installed docker
+- run `ansible-playbook deploy.yml`
 
 TODO:
 - save\load cookies
